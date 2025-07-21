@@ -34,9 +34,9 @@ begin
             case state is
                 -- Waiting for falling edge of start bit (rx goes from '1' to '0')
                 when idle =>
+                    flag <= '0';
                     if rx_prev = '1' and rx_sync = '0' then -- Falling edge detected
                         counter <= 0;
-                        flag <= '0';
                         state <= start;
                     end if;
 
