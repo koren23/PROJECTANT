@@ -10,8 +10,7 @@ entity Receiver is
         clk           : in  std_logic;         -- clock coming from clock wizard (100 MHz)
         rx            : in  std_logic;         -- rx coming from io0 external
         output_vector : out std_logic_vector(7 downto 0); -- vector of 8 bits rx output
-        flag          : out std_logic;         -- flag sent to tx means - start sending data
-        stateflag     : out std_logic_vector(1 downto 0) -- 00 idle 01 start 10 data 11 stop
+        flag          : out std_logic         -- flag sent to tx means - start sending data
     );
 end Receiver;
 
@@ -31,20 +30,18 @@ begin
         if rising_edge(clk) then
             rx_prev <= rx_sync;      -- Store previous rx value
             rx_sync <= rx;           -- Synchronize rx with clock
-            flag <= '0';  -- Reset flag every cycle
 
             case state is
                 -- Waiting for falling edge of start bit (rx goes from '1' to '0')
                 when idle =>
-                    stateflag <= "00";
                     if rx_prev = '1' and rx_sync = '0' then -- Falling edge detected
                         counter <= 0;
+                        flag <= '0';
                         state <= start;
                     end if;
 
                 -- Half bit duration to avoid noise (start bit detection)
                 when start =>
-                    stateflag <= "01";
                     if counter = Bit_counting_value /2 then
                         counter <= 0;
                         bit_number <= 0;
@@ -55,7 +52,6 @@ begin
 
                 -- Receiving 8 data bits (one at a time)
                 when data =>
-                    stateflag <= "10";
                     if counter = Bit_counting_value then
                         counter <= 0;
                         tempdata(bit_number) <= rx_sync;  -- Store received bit in tempdata                       
@@ -71,7 +67,6 @@ begin
 
                 -- Checking the stop bit (should be '1')
                 when stop =>
-                    stateflag <= "11";
                     if counter = Bit_counting_value then
                         counter <= 0;
                         if rx_sync = '1' then  -- Valid stop bit
