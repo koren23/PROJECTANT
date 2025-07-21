@@ -5,7 +5,7 @@ library IEEE;
         generic (
             stop_bit_length : integer := 1;  -- 1=1 baud, 2=1.5 baud, 3=2 baud
             BaudRate        : integer := 115200;
-            Clk_Freq        : integer := 100e4
+            Clk_Freq        : integer := 100e6
         );
         port (
             clk      : in std_logic;
@@ -21,7 +21,7 @@ library IEEE;
         signal counter            : integer range 0 to 868 := 0;
         signal sentflag           : boolean                := false;
         signal stopcount          : integer range 0 to 1   := 0;
-        signal Bit_counting_value : integer                := (100*Clk_Freq)/BaudRate;
+        signal Bit_counting_value : integer                := Clk_Freq/BaudRate;
         signal bit_number         : integer range 0 to 7   := 0; -- location of bit being sent
     begin
         process(clk)
