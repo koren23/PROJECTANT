@@ -50,51 +50,55 @@ begin
                    
                 when data =>
                     stateflag <= "10";
-                    if bit_number = 7 then
-                        if counter = bit_counting_value then
-                            tx <= tempbyte(bit_number);
-                            counter <= 0;
+                     if counter = bit_counting_value then
+                        tx <= tempbyte(bit_number);
+                        counter <= 0;
+                        if bit_number = 7 then
+                            state <= stop;
                         else
-                            counter <= counter + 1;
+                            bit_number <= bit_number + 1;
                         end if;
-                        state <= stop;
                     else
-                        bit_number <= bit_number + 1;
+                        counter <= counter + 1;
                     end if;
                     
                     
                 when stop =>
-                    stateflag <= "11";
-                    case stop_bit_length is
-                        
-                        when 3 =>
-                        if counter = bit_counting_value + bit_counting_value then
-                            state <= idle;
-                            counter <= 0;
-                        else
-                            tx <= '1';
-                            counter <= counter +1;
-                        end if;
-                        
-                        when 2 =>
-                        if counter = bit_counting_value/2 + bit_counting_value then
-                            state <= idle;
-                            counter <= 0;
-                        else
-                            tx <= '1';
-                            counter <= counter +1;
-                        end if;
-                        
-                        when others =>
-                        if counter = bit_counting_value then
-                            state <= idle;
-                            counter <= 0;
-                        else
-                            tx <= '1';
-                            counter <= counter +1;
-                        end if;
-                        
-                    end case;
+                    if counter = bit_counting_value then
+                        stateflag <= "11";
+                        case stop_bit_length is
+                            
+                            when 3 =>
+                            if counter = bit_counting_value + bit_counting_value then
+                                state <= idle;
+                                counter <= 0;
+                            else
+                                tx <= '1';
+                                counter <= counter +1;
+                            end if;
+                            
+                            when 2 =>
+                            if counter = bit_counting_value/2 + bit_counting_value then
+                                state <= idle;
+                                counter <= 0;
+                            else
+                                tx <= '1';
+                                counter <= counter +1;
+                            end if;
+                            
+                            when others =>
+                            if counter = bit_counting_value then
+                                state <= idle;
+                                counter <= 0;
+                            else
+                                tx <= '1';
+                                counter <= counter +1;
+                            end if;
+                            
+                        end case;
+                else
+                    counter <= counter + 1;
+                end if;
             end case;
         end if;
     end process;
