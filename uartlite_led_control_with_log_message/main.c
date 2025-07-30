@@ -10,9 +10,9 @@ int main()
 	XGpio ledgpio;
 	XUartLite uartlite;
 
-	XGpio_Initialize(&ledgpio,XPAR_GPIO_0_DEVICE_ID); // initialize from xparameters.h
+	XGpio_Initialize(&ledgpio,0); // initialize from xparameters.h
 	XGpio_SetDataDirection(&ledgpio, 1, 0x0); // (0 = output)
-	XUartLite_Initialize(&uartlite,XPAR_UARTLITE_0_DEVICE_ID);
+	XUartLite_Initialize(&uartlite,0);
 
 	int ledstate = 0; //  0 for off 1 for on
 	char messages[][50] = {
@@ -25,7 +25,7 @@ int main()
 
 	while(1){
 		int i;
-		if(!XUartLite_IsReceiveEmpty(XPAR_UARTLITE_0_BASEADDR)){ // XUartLite_IsReceiveEmpt returns false when data is in FIFO . . . XPAR_UARTLITE_0_BASEADDR is the u32 BaseAddress
+		if(!XUartLite_IsReceiveEmpty(0)){ // XUartLite_IsReceiveEmpt returns false when data is in FIFO . . . XPAR_UARTLITE_0_BASEADDR is the u32 BaseAddress
 			u8 byte = XUartLite_RecvByte(uartlite.RegBaseAddress); // saves data in 8 bits
 			switch(byte){
 
@@ -66,9 +66,3 @@ int main()
 	}
 	return 0;
 }
-
-
-
-
-
-
