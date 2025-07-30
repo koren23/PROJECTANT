@@ -8,12 +8,12 @@
 int main()
 {
 	XGpio ledgpio;
-	XGpio_Initialize(&ledgpio,XPAR_GPIO_0_DEVICE_ID);
+	XGpio_Initialize(&ledgpio,0);
 	XGpio_SetDataDirection(&ledgpio, 1, 0x0);
 
 	XUartPs uartps;
 	XUartPs_Config *config;
-	config = XUartPs_LookupConfig(XPAR_PS7_UART_0_DEVICE_ID); // lookups the config using the id and the lookupconfig function
+	config = XUartPs_LookupConfig(0); // lookups the config using the id and the lookupconfig function
 	XUartPs_CfgInitialize(&uartps, config, config -> BaseAddress);
 
 	while(1){
