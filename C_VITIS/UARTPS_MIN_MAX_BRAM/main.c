@@ -4,8 +4,14 @@
 #include "xil_io.h"
 #include "sleep.h"
 
+#define frequency 100000000
+
+
+
 int main(void)
 {
+    
+
     XUartPs uart;
     XUartPs_Config *config;
     // initialize UART
@@ -25,8 +31,9 @@ int main(void)
     u8 data = 0;
     int maxvalue = 0;
     int maxlocation = 0;
-    int minvalue = 0;
+    int minvalue = 255;
     int minlocation = 0;
+    int counter = 0;
 
     while(1){
         // wait for incoming data
@@ -46,19 +53,29 @@ int main(void)
             state = 0;
         }
 
-        for(int tempaddr = XPAR_AXI_BRAM_CTRL_0_BASEADDR; tempaddr < XPAR_AXI_BRAM_CTRL_0_BASEADDR  + 256; tempaddr++){ // loops for every address
-            if(Xil_In8(tempaddr) > maxvalue){maxvalue = Xil_In8(tempaddr);maxlocation = tempaddr;}
-            else if(Xil_In8(tempaddr) < minvalue){minvalue = Xil_In8(tempaddr);minlocation = tempaddr;}
+        for (int tempaddr = XPAR_AXI_BRAM_CTRL_0_BASEADDR; tempaddr < XPAR_AXI_BRAM_CTRL_0_BASEADDR + 256; tempaddr++) {
+            u8 val = Xil_In8(tempaddr); // val is the value of the current address
+            if (val > maxvalue) { // check if bigger than max (starting 0)
+                maxvalue = val;
+                maxlocation = tempaddr;
+            }
+            if (val < minvalue) { // check if smaller than min (starting 0)
+                minvalue = val;
+                minlocation = tempaddr;
+            }
         }
 
-        // need delay for 1 second minus 14 bits
 
-        /* using the UART TX:
-                XUartPs_Send(&uart, &received, 1);      
-            send the following:
-            [ "Min:" minvalue minlocation 0x09 "Max:" maxvalue maxlocation 0x0A ]
-                */
-        
+        char message[50]; // defining message
+        sprintf(message, "Min:%d %d\tMax:%d %d\n", minvalue, minlocation - XPAR_AXI_BRAM_CTRL_0_BASEADDR, maxvalue, maxlocation - XPAR_AXI_BRAM_CTRL_0_BASEADDR);
+        int len = strlen(message);
+
+        if (counter == frequency){ // every second send message
+            counter = 0;
+            XUartPs_Send(&uart, (u8 *)message, len); // send all bytes at once
+        }
+        else
+            counter++;
 }
 
 }
