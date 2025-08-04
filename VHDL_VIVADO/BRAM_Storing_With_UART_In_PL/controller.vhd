@@ -64,7 +64,6 @@ use IEEE.STD_LOGIC_1164.ALL;
 							enaout <= '1';-- general enable
                             weaout <= '0'; -- disable write (reads)
                             addressout <= tempaddr;	-- exports address to BRAM
-                            dout <= dbramin; -- exports data to tx
                         else -- write
                                 addressout <= tempaddr; -- exports address to BRAM
                                 dbramout <= tempdata; -- exports data to BRAM
@@ -77,6 +76,7 @@ use IEEE.STD_LOGIC_1164.ALL;
                      if(startdelaytx = '1') then -- need to delay writestartout a little 
                         if(counter = 2) then  -- delay for 2 clock counts (1 might work)  
                             writestartout <= '1'; -- tx starts writing
+                            dout <= dbramin; -- exports data to tx
                             counter <= 0;
                             startdelaytx <= '0'; -- reset the entire if loop
                         else
