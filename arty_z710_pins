@@ -42,7 +42,41 @@ set_property IOSTANDARD LVCMOS33 [get_ports PMODA1R]
 set_property PACKAGE_PIN U19 [get_ports PMODA1R]
 set_property IOSTANDARD LVCMOS33 [get_ports PMODA1L]
 set_property PACKAGE_PIN Y19 [get_ports PMODA1L]
+set_property IOSTANDARD LVCMOS33 [get_ports PMODA_2R]
+set_property PACKAGE_PIN W18 [get_ports PMODA_2R]
+set_property IOSTANDARD LVCMOS33 [get_ports PMODA_2L]
+set_property PACKAGE_PIN Y16 [get_ports PMODA_2L]
+set_property IOSTANDARD LVCMOS33 [get_ports PMODA_3R]
+set_property PACKAGE_PIN W19 [get_ports PMODA_3R]
+set_property IOSTANDARD LVCMOS33 [get_ports PMODA_3L]
+set_property PACKAGE_PIN Y17 [get_ports PMODA_3L]
+
+set_property IOSTANDARD LVCMOS33 [get_ports PMODB_0R]
+set_property PACKAGE_PIN V16 [get_ports PMODB_0R]
+set_property IOSTANDARD LVCMOS33 [get_ports PMODB_0L]
+set_property PACKAGE_PIN W14 [get_ports PMODB_0L]
+set_property IOSTANDARD LVCMOS33 [get_ports PMODB_1R]
+set_property PACKAGE_PIN W16 [get_ports PMODB_1R]
+set_property IOSTANDARD LVCMOS33 [get_ports PMODB_1L]
+set_property PACKAGE_PIN Y14 [get_ports PMODB_1L]
+set_property IOSTANDARD LVCMOS33 [get_ports PMODB_2R]
+set_property PACKAGE_PIN V12 [get_ports PMODB_2R]
+set_property IOSTANDARD LVCMOS33 [get_ports PMODB_2L]
+set_property PACKAGE_PIN T11 [get_ports PMODB_2L]
+set_property IOSTANDARD LVCMOS33 [get_ports PMODB_3R]
+set_property PACKAGE_PIN W13 [get_ports PMODB_3R]
+set_property IOSTANDARD LVCMOS33 [get_ports PMODB_3L]
+set_property PACKAGE_PIN T10 [get_ports PMODB_3L]
 
 
 set_property IOSTANDARD LVCMOS33 [get_ports BTN0]
 set_property PACKAGE_PIN D19 [get_ports BTN0]
+
+set_property IOSTANDARD LVCMOS33 [get_ports LED0]
+set_property PACKAGE_PIN R14 [get_ports LED0]
+set_property IOSTANDARD LVCMOS33 [get_ports LED1]
+set_property PACKAGE_PIN P14 [get_ports LED1]
+
+
+
+
