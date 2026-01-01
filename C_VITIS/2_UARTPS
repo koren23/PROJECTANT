@@ -1,0 +1,35 @@
+#include "xuartps.h"
+#include "xparameters.h"
+#include "sleep.h"
+#define UART_DEVICE_ID XPAR_XUARTPS_0_DEVICE_ID
+
+int main() {
+    XUartPs Uart_Ps0;
+    XUartPs Uart_Ps1;
+    XUartPs_Config Config0;
+    XUartPs_Config Config1;
+
+    Config0.BaseAddress = XPAR_XUARTPS_0_BASEADDR;
+    Config1.BaseAddress = XPAR_XUARTPS_1_BASEADDR;
+    Config0.InputClockHz = XPAR_XUARTPS_0_CLOCK_FREQ;
+    Config1.InputClockHz = XPAR_XUARTPS_1_CLOCK_FREQ;
+
+    XUartPs_CfgInitialize(&Uart_Ps0, &Config0, Config0.BaseAddress);
+    XUartPs_CfgInitialize(&Uart_Ps1, &Config1, Config1.BaseAddress);
+    XUartPs_SetBaudRate(&Uart_Ps0, 115200);
+    XUartPs_SetBaudRate(&Uart_Ps1, 115200);
+
+    char msg0[] = "Uart0 works!\n";
+    char msg1[] = "Uart1 works!\n";
+    while(1){
+        XUartPs_Send(&Uart_Ps0, (u8*)msg0, sizeof(msg0) - 1);
+        usleep(500000);
+        XUartPs_Send(&Uart_Ps1, (u8*)msg1, sizeof(msg1) - 1);
+        usleep(500000);
+    }
+    
+
+
+    return 0;
+    
+}
