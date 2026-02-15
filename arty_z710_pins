@@ -71,6 +71,13 @@ set_property PACKAGE_PIN T10 [get_ports PMODB_3L]
 
 set_property IOSTANDARD LVCMOS33 [get_ports BTN0]
 set_property PACKAGE_PIN D19 [get_ports BTN0]
+set_property IOSTANDARD LVCMOS33 [get_ports BTN1]
+set_property PACKAGE_PIN D20 [get_ports BTN1]
+set_property IOSTANDARD LVCMOS33 [get_ports BTN2]
+set_property PACKAGE_PIN L20 [get_ports BTN2]
+set_property IOSTANDARD LVCMOS33 [get_ports BTN3]
+set_property PACKAGE_PIN L19 [get_ports BTN3]
+
 
 set_property IOSTANDARD LVCMOS33 [get_ports LED0]
 set_property PACKAGE_PIN R14 [get_ports LED0]
